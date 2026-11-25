@@ -1,0 +1,30 @@
+{
+  "name": "onhand",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "app",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w app",
+    "server": "npm run start -w server",
+    "sim": "evenhub-simulator http://localhost:5173 --automation-port 9898",
+    "test": "vitest run",
+    "typecheck": "tsc -p shared --noEmit && tsc -p server --noEmit && npm run typecheck -w app",
+    "gen:fixtures": "tsx shared/scripts/gen-fixtures.ts",
+    "check:sim": "node scripts/sim-input-check.mjs",
+    "eval:parser": "tsx shared/scripts/heldout.ts",
+    "check:speech": "node scripts/speech-check.mjs",
+    "sim:replay": "evenhub-simulator \"http://localhost:5173/?replay=hero\" --automation-port 9898"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "fast-check": "^3.23.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
