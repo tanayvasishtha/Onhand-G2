@@ -1,0 +1,61 @@
+Dish,Section,Price (AED),Allergens,Vegetarian,Vegan,Spice (0-3),Notes
+Burrata and heirloom tomato,Starters,68,Dairy,Yes,no,0,
+Calamari fritti,Starters,58,"Gluten, shellfish, egg",N,N,0,
+Beef carpaccio,Starters,72.00,Dairy; mustard,no,No,0,
+Arancini trio,Starters,49,"gluten, dairy, egg",Y,No,0,
+Smoked salmon crostini,Starters,55,"Fish, gluten, dairy",no,No,0,
+Hummus and za'atar flatbread,Starters,39.00,"Sesame, gluten",yes,Y,0,
+Chilli prawns,Starters,64,Shellfish,No,No,2,
+Caesar salad,Salads,52,"Egg, fish, dairy, gluten",No,N,0,
+Quinoa and roast squash,Salads,AED 48,None,yes,Yes,0,
+Fattoush,Salads,AED 42,Gluten,yes,Yes,0,
+"Rocket, pear and walnut",Salads,46,"Walnuts, dairy",Y,No,0,
+Risotto alla Milanese,Risotto,82.00,"Dairy, celery",Yes,No,0,
+Risotto ai funghi,Risotto,86.00,"Pine nuts, dairy",Y,No,0,"Truffle oil, toasted pine nuts on top"
+Seafood risotto,Risotto,98,"Shellfish, fish, dairy, celery",No,N,0,
+Pumpkin risotto (vegan),Risotto,78.00,Celery,yes,yes,0,Made with oat cream
+Spaghetti carbonara,Pasta,AED 74,"Gluten, egg, dairy",N,no,0,Beef bacon
+Penne arrabbiata,Pasta,58.00,Gluten,Yes,Yes,2,
+Pesto genovese,Pasta,69.00,"Gluten, pine nuts, dairy",Yes,N,0,
+Lobster linguine,Pasta,145,"Gluten, shellfish, dairy",No,No,1,
+Gnocchi sorrentina,Pasta,AED 66,gluten; dairy; egg,Yes,No,0,
+Gluten-free penne pomodoro,Pasta,62,,Yes,Yes,0,"GF pasta, ask kitchen to confirm"
+Lasagne al forno,Pasta,79,"Gluten, dairy, egg, celery",N,no,0,
+Margherita,Pizza,AED 55,"Gluten, dairy",yes,N,0,
+Diavola,Pizza,68,"Gluten, dairy",no,No,2,Beef pepperoni
+Quattro formaggi,Pizza,72,"Gluten, dairy",yes,N,0,
+Pistachio mortadella pizza,Pizza,AED 84,"Gluten, dairy, pistachio",no,N,0,
+Vegan garden pizza,Pizza,AED 64,"Gluten, soy",yes,Y,0,Soy cheese
+Truffle mushroom pizza,Pizza,89.00,"Gluten, dairy",Y,no,0,
+Grilled sea bass,Grill,AED 128,Fish,No,No,0,
+Ribeye 300g,Grill,185,Dairy,No,No,0,Herb butter on the side
+Chicken milanese,Grill,92,"Gluten, egg, dairy",No,no,0,
+Lamb chops,Grill,AED 158,Mustard,N,No,1,
+Salmon teriyaki,Grill,118,"Fish, soy, sesame",No,N,0,
+Spiced chicken skewers,Grill,84,Dairy,no,No,2,Yoghurt marinade
+Grilled halloumi plate,Grill,72,Dairy,Yes,no,0,
+Satay tofu bowl,Grill,69.00,"Peanuts, soy, sesame",Yes,yes,1,
+Tiramisu,Desserts,AED 45,"Gluten, egg, dairy",Y,No,0,
+Panna cotta,Desserts,39.00,Dairy,Y,N,0,
+Chocolate fondant,Desserts,48.00,"Gluten, egg, dairy, hazelnut",yes,no,0,
+Pistachio gelato,Desserts,34,"Pistachio, dairy",Yes,N,0,
+Lemon sorbet,Desserts,28,None,Y,Y,0,
+Baklava,Desserts,36,"Gluten, walnuts, pistachio",yes,No,0,
+Affogato,Desserts,32,Dairy,Yes,No,0,
+Fruit plate,Desserts,38.00,-,Y,Yes,0,
+Almond cake,Desserts,39.00,"Almonds, egg, dairy",Yes,no,0,
+Fresh orange juice,Drinks,26.00,,yes,Yes,0,
+Mint lemonade,Drinks,24.00,None,Yes,Y,0,
+Iced latte,Drinks,AED 28,Dairy,Yes,No,0,Oat milk on request
+Pistachio shake,Drinks,34,"Pistachio, dairy",Yes,No,0,
+Espresso,Drinks,16.00,None,Yes,Yes,0,
+Sparkling water,Drinks,18.00,None,yes,yes,0,
+Mushroom soup,Starters,AED 44,"Dairy, celery",Yes,no,0,
+Lentil soup,Starters,AED 36,Celery,Y,Yes,1,
+Prawn tempura,Starters,62,"Shellfish, gluten, egg",N,No,0,
+Bruschetta,Starters,38.00,Gluten,yes,Yes,0,
+Kids pasta butter,Pasta,AED 35,"Gluten, dairy",Yes,N,0,
+Kids chicken bites,Grill,42.00,"Gluten, egg",No,N,0,
+Truffle fries,Starters,AED 32,Dairy,Yes,N,0,Parmesan on top
+Sesame green beans,Salads,34.00,"Sesame, soy",Yes,Yes,1,
+Prawn and avocado salad,Salads,64,"Shellfish, egg",No,No,0,

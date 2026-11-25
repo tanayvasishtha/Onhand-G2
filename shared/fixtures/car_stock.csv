@@ -1,0 +1,84 @@
+Stock #,Vehicle,Make,Body,Year,Colour,Price (AED),Mileage (km),Fuel,Location,Notes
+ST-4100,Honda Civic,Honda,Sedan,2018,Gray,"AED 22,500","162,292 km",Petrol,Deira,Full service history
+ST-4107,Kia Sportage,Kia,SUV,2021,Red,43.5k,"66,591 km",Petrol,Al Quoz,Minor scratch rear bumper
+ST-4114,Hyundai Elantra,Hyundai,Sedan,2019,White,"AED 24,000",156457,Petrol,Sharjah,GCC spec
+ST-4121,Nissan Patrol LE,Nissan,SUV,2021,Black,"AED 134,500","80,638 km",Petrol,Sharjah,One owner
+ST-4128,Tesla Model Y,Tesla,SUV,2023,Blue,119500,57602,Electric,Al Quoz,Minor scratch rear bumper
+ST-4135,Nissan Altima,Nissan,sedan,2020,Beige,"AED 38,000","81,890",Petrol,Al Quoz,Minor scratch rear bumper
+ST-4142,Kia Picanto,Kia,Hatchback,2021,Red,"22,500",76526,Petrol,Al Quoz,One owner
+ST-4149,Toyota Land Cruiser GXR,Toyota,SUV,2024,Grey,241000,"37,527 km",Petrol,Al Quoz,GCC spec
+ST-4156,Tesla Model 3,Tesla,sedan,2022,White,"AED 92,500",57376,Electric,Deira,Full service history
+ST-4163,Toyota Prado VX,Toyota,SUV,2018,Beige,69500,86377,Petrol,Al Quoz,Under warranty
+ST-4170,Ford Ranger,Ford,Pickup,2018,Silver,36k,83932,Diesel,Al Quoz,Full service history
+ST-4177,Mercedes C 200,Mercedes,Sedan,2025,Blue,168.5k,"13,250 km",Petrol,Sharjah,
+ST-4999,Hyundai Tucson,Hyundai,SUV,2022,White,"AED 84,500","48,200 km",Petrol,Al Quoz,GCC spec
+ST-4184,Toyota Prado VX,Toyota,SUV,2022,Black,"AED 125,500","67,084 km",Petrol,Al Quoz,One owner
+ST-4191,Toyota RAV4 Hybrid,Toyota,SUV,2020,Gray,"48,000",90027,Hybrid,Al Quoz,Under warranty
+ST-4198,Mercedes GLE 450,Mercedes,SUV,2022,White,"212,000",55493,Petrol,Al Quoz,
+ST-4205,Hyundai Tucson,Hyundai,SUV,2023,Grey,"AED 63,000",36348,Petrol,Deira,
+ST-4212,Toyota RAV4 Hybrid,Toyota,SUV,2020,Grey,"AED 51,500",112595,Hybrid,Al Quoz,Full service history
+ST-4219,Honda CR-V,Honda,SUV,2022,White,60.5k,68115,Petrol,Al Quoz,Minor scratch rear bumper
+ST-4226,Honda Civic,Honda,Sedan,2025,Gray,"AED 76,000","14,028 km",Petrol,Deira,One owner
+ST-4233,Mitsubishi Pajero,Mitsubishi,suv,2020,Red,"AED 44,500",107945,Petrol,Deira,Minor scratch rear bumper
+ST-4240,BMW 320i,BMW,Sedan,2025,White,168500,"10,591 km",Petrol,Deira,Under warranty
+ST-4247,Tesla Model 3,Tesla,sedan,2020,Black,67000,"71,330",Electric,Deira,
+ST-4254,Tesla Model Y,Tesla,suv,2018,Black,"AED 53,000",160190,Electric,Al Quoz,
+ST-4261,Nissan Altima,Nissan,Sedan,2022,White,"AED 49,000","72,134 km",Petrol,Al Quoz,One owner
+ST-4268,Lexus LX 600,Lexus,suv,2025,Red,433.5k,13779,Petrol,Al Quoz,
+ST-4275,Mercedes GLE 450,Mercedes,SUV,2025,Gray,"AED 312,500",16940,Petrol,Al Quoz,GCC spec
+ST-4282,Lexus LX 600,Lexus,SUV,2020,Gray,"AED 224,000",128147,Petrol,Al Quoz,Minor scratch rear bumper
+ST-4289,Toyota Land Cruiser GXR,Toyota,SUV,2024,Black,226k,"40,566",Petrol,Al Quoz,
+ST-4296,Lexus ES 300h,Lexus,Sedan,2018,Silver,"60,000",123579,Hybrid,Deira,GCC spec
+ST-4303,Toyota Land Cruiser GXR,Toyota,SUV,2018,Black,"AED 95,500",163924,Petrol,Al Quoz,Minor scratch rear bumper
+ST-4310,BMW X5 xDrive40i,BMW,SUV,2019,Red,126500,72420,Petrol,Sharjah,Minor scratch rear bumper
+ST-4317,Mitsubishi Pajero,Mitsubishi,SUV,2025,White,104.5k,"16,733",Petrol,Sharjah,Full service history
+ST-4324,Honda Civic,Honda,Sedan,2018,White,"26,000","78,056",Petrol,Sharjah,Under warranty
+ST-4331,Lexus RX 350,Lexus,SUV,2018,White,"AED 72,500","120,936",Petrol,Sharjah,GCC spec
+ST-4338,Kia Sportage,Kia,SUV,2021,Beige,"44,000","83,923",Petrol,Sharjah,One owner
+ST-4345,Ford Ranger,Ford,Pickup,2019,Beige,43000,"134,892 km",Diesel,Sharjah,Full service history
+ST-4352,Lexus LX 600,Lexus,suv,2023,White,338k,53448,Petrol,Sharjah,Under warranty
+ST-4359,Nissan X-Trail,Nissan,suv,2023,Gray,64000,"39,560",Petrol,Sharjah,Full service history
+ST-4366,Honda CR-V,Honda,SUV,2019,White,41.5k,"96,178 km",Petrol,Sharjah,Minor scratch rear bumper
+ST-5006,Kia Sportage,Kia,SUV,2021,Pearl White,79.5k,61200,Petrol,Deira,One owner
+ST-4373,Lexus ES 300h,Lexus,sedan,2022,Black,106000,71826,Hybrid,Al Quoz,
+ST-4380,Nissan Patrol LE,Nissan,SUV,2024,Silver,"AED 206,500",45541,Petrol,Sharjah,One owner
+ST-4387,BMW 320i,BMW,Sedan,2022,Black,95.5k,81898,Petrol,Al Quoz,Under warranty
+ST-4394,Toyota Land Cruiser GXR,Toyota,suv,2024,Grey,218000,"34,359 km",Petrol,Al Quoz,
+ST-4401,Toyota RAV4 Hybrid,Toyota,SUV,2022,Blue,69000,67157,Hybrid,Deira,One owner
+ST-4408,Hyundai Tucson,Hyundai,suv,2021,Black,"AED 43,500","97,686 km",Petrol,Sharjah,
+ST-4415,Mercedes GLE 450,Mercedes,SUV,2024,Gray,"AED 275,500","41,764 km",Petrol,Al Quoz,Full service history
+ST-4422,Nissan Patrol LE,Nissan,SUV,2020,Silver,114500,"116,500 km",Petrol,Deira,
+ST-4429,Honda Civic,Honda,sedan,2021,White,41000,62752,Petrol,Al Quoz,GCC spec
+ST-4436,Toyota Land Cruiser GXR,Toyota,SUV,2020,Pearl White,"AED 123,500",106052,Petrol,Sharjah,GCC spec
+ST-4443,Tesla Model 3,Tesla,Sedan,2018,Black,"47,000","110,394 km",Electric,Al Quoz,Minor scratch rear bumper
+ST-4450,Lexus ES 300h,Lexus,Sedan,2020,Grey,73k,"66,658 km",Hybrid,Sharjah,
+ST-4457,Hyundai Elantra,Hyundai,Sedan,2020,White,"AED 29,000",65951,Petrol,Deira,
+ST-4464,Hyundai Tucson,Hyundai,suv,2020,White,"38,500","106,793",Petrol,Deira,GCC spec
+ST-4471,Nissan Patrol LE,Nissan,suv,2023,Silver,186.5k,"62,190",Petrol,Al Quoz,Under warranty
+ST-4478,Toyota Land Cruiser GXR,Toyota,SUV,2024,Grey,"AED 233,500",20648,Petrol,Deira,One owner
+ST-4485,Hyundai Elantra,Hyundai,Sedan,2019,Beige,"AED 22,500",153068,Petrol,Deira,
+ST-4492,Lexus RX 350,Lexus,suv,2019,Blue,86500,"96,597 km",Petrol,Al Quoz,Under warranty
+ST-4499,Mitsubishi Pajero,Mitsubishi,suv,2024,Pearl White,81000,"25,662",Petrol,Sharjah,
+ST-4506,Ford Ranger,Ford,Pickup,2022,Red,64k,"58,970",Petrol,Sharjah,GCC spec
+ST-4513,Honda Civic,Honda,sedan,2022,Grey,"47,500","72,130 km",Petrol,Al Quoz,Under warranty
+ST-4520,Nissan X-Trail,Nissan,suv,2020,Grey,41k,107401,Petrol,Sharjah,Full service history
+ST-4527,Hyundai Tucson,Hyundai,SUV,2021,Pearl White,46500,"49,044",Petrol,Sharjah,
+ST-5013,Nissan X-Trail,Nissan,suv,2022,White,"88,000","39,900 km",Petrol,Sharjah,
+ST-4534,Tesla Model 3,Tesla,sedan,2020,White,"AED 61,500",82647,Electric,Al Quoz,Minor scratch rear bumper
+ST-4541,Lexus RX 350,Lexus,SUV,2020,Gray,"105,500","98,843",Petrol,Al Quoz,
+ST-4548,Kia Picanto,Kia,hatchback,2025,White,"36,500",17848,Petrol,Al Quoz,
+ST-4555,Toyota Hilux,Toyota,pickup,2018,Gray,"32,500",167752,Diesel,Deira,
+ST-4562,Kia Picanto,Kia,hatchback,2019,White,"AED 14,500",131076,Petrol,Al Quoz,Full service history
+ST-4569,Lexus RX 350,Lexus,suv,2023,White,146000,62596,Petrol,Deira,Minor scratch rear bumper
+ST-4576,Toyota Camry,Toyota,Sedan,2022,White,54k,"88,050 km",Petrol,Al Quoz,Minor scratch rear bumper
+ST-4583,Hyundai Elantra,Hyundai,Sedan,2023,Red,"AED 46,000","35,437",Petrol,Al Quoz,One owner
+ST-4590,Ford Mustang,Ford,Coupe,2021,Red,"77,500",50569,Petrol,Al Quoz,One owner
+ST-4597,Kia Picanto,Kia,Hatchback,2018,Blue,13000,"76,782",Petrol,Deira,
+ST-4604,Toyota Prado VX,Toyota,SUV,2022,Grey,109500,41528,Petrol,Deira,Minor scratch rear bumper
+ST-4611,Lexus LX 600,Lexus,SUV,2022,Grey,"264,500","52,742 km",Petrol,Sharjah,
+ST-4618,Kia Picanto,Kia,Hatchback,2023,Beige,27k,"35,377",Petrol,Al Quoz,One owner
+ST-4625,Lexus RX 350,Lexus,suv,2018,Silver,"74,000","116,350 km",Petrol,Deira,Under warranty
+ST-4632,Lexus ES 300h,Lexus,sedan,2018,Red,"60,000","100,234 km",Hybrid,Al Quoz,
+ST-4639,Tesla Model Y,Tesla,suv,2018,Black,"59,000",176154,Electric,Sharjah,Minor scratch rear bumper
+ST-4646,Ford Mustang,Ford,Coupe,2024,Pearl White,"AED 133,500","44,273",Petrol,Al Quoz,
+ST-4653,Tesla Model Y,Tesla,SUV,2021,Grey,96000,90204,Electric,Al Quoz,Minor scratch rear bumper
