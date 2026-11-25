@@ -9,6 +9,7 @@
     "shared"
   ],
   "scripts": {
+    "demo": "node scripts/demo.mjs",
     "dev": "npm run dev -w app",
     "server": "npm run start -w server",
     "sim": "evenhub-simulator http://localhost:5173 --automation-port 9898",
