@@ -6,7 +6,20 @@
   "min_sdk_version": "0.0.16",
   "entrypoint": "index.html",
   "permissions": [
-    { "name": "g2-microphone", "desc": "Listens only while you hold the ring, to turn the client's request into sheet filters. Audio is never stored." }
+    {
+      "name": "g2-microphone",
+      "desc": "Listens only while you hold the ring, to turn the client's request into sheet filters. Audio is never stored."
+    },
+    {
+      "name": "network",
+      "desc": "Sends ring-hold audio and requests to the Onhand server, which runs speech-to-text and reads and writes your Google Sheet.",
+      "whitelist": [
+        "https://onhand-g2.onrender.com",
+        "wss://onhand-g2.onrender.com"
+      ]
+    }
   ],
-  "supported_languages": ["en"]
+  "supported_languages": [
+    "en"
+  ]
 }

@@ -1,0 +1,21 @@
+# Render blueprint for the Onhand server (free plan). Keys are set in the
+# Render dashboard, never in this file.
+services:
+  - type: web
+    name: onhand-g2
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev
+    startCommand: npm run server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DEEPGRAM_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: SHEET_SCRIPT_URL
+        sync: false
+      - key: SHEET_SCRIPT_TOKEN
+        sync: false
