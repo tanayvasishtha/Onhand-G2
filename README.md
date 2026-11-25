@@ -1,6 +1,6 @@
 # Onhand
 
-Onhand puts your spreadsheet on Even Realities G2 glasses during a client meeting. Hold the ring and repeat what the client asked for ("two bed in Marina, under two and a half, sea view"). The lens shows the three closest rows with their sheet row numbers. Tap to shortlist a row and swipe to move through the list. When nothing matches, Onhand says so and shows the nearest rows, with what it had to loosen to find them.
+Onhand puts your Google Sheet on Even Realities G2 glasses during a client meeting. Hold the ring and repeat what the client asked for ("two bed in Marina, under two and a half, sea view"). The lens shows the three closest rows with their sheet row numbers. Tap to shortlist a row and swipe to move through the list. When nothing matches, Onhand says so and shows the nearest rows, with what it had to loosen to find them. When the meeting ends, the shortlist goes into a Leads tab in the same sheet and a follow-up email waits in Gmail drafts.
 
 Built for the Even Realities G2 "Heads Up" hackathon, track AI Assistants & Work.
 
@@ -50,6 +50,8 @@ nearest, eased: pets, Sea, budget
 4. **Claude fallback.** Claude is asked only when the parser leaves words it could not use, and only about those words. It returns a structured filter object. Every filter is checked against the sheet before use, and a made-up column or value is dropped. If the sheet cannot answer, the lens gets a short note such as "no JBR in this sheet".
 5. **Engine.** Plain code filters the rows. A blank cell never counts as a no: those rows come after the sure matches, marked `?`. When nothing matches, the engine loosens filters one at a time in the order the sheet defines (pets, furnished, view, price, handover, area, bedrooms). For price it switches to the rows closest to the budget. It never loosens an allergen or an exclusion.
 
+6. **Sheet.** A short Apps Script in the sheet (`apps-script/Code.gs`) serves each tab as displayed values, so prices like "AED 2.35m" and "2,350,000" arrive the way the agent typed them and go through the same loader. End meeting appends one row to a Leads tab (date, filters, shortlisted rows, what the client said, draft link) and creates a Gmail draft that lists each option with its sheet row number. The script answers only calls that carry a token, and only the server knows the token.
+
 Claude never sees or filters the rows. A wrong answer from the model can at most add a filter on a real column, and that filter shows on the first line of the lens.
 
 The same parser and engine run three sheets, each described by a column list in `shared/src/schemas.ts`: Dubai units, a restaurant menu with allergens, and used-car stock.
@@ -60,13 +62,14 @@ All numbers come from scripts in this repo.
 
 | Check | Result | Command |
 |---|---|---|
-| Unit and property tests | 229 passed | `npm test` |
+| Unit and property tests | 233 passed | `npm test` |
 | Parser, 80 meeting requests across 3 sheets, each expected answer reviewed by hand | 80 of 80 | `npm test` (shared/test/parse-eval.test.ts) |
 | Parser, 20 requests written after tuning | 15 of 20 on first run, 20 of 20 after fixing the 5 misses | `npm run eval:parser` |
 | Engine properties, 1,000 random queries | every sure row passes every filter, every maybe row fails none | `npm test` (engine.test.ts) |
 | Simulator input check: hold, release, swipes, taps, tap then hold, menu | 10 of 10 reach the app | `npm run check:sim` |
 | Speech, 3 spoken clips through the relay | final text 0.40 to 0.45 s after release, all three transcribed correctly | `npm run check:speech` |
 | Claude fallback on 2 requests the sheet cannot answer | correct notes in 1.7 to 3.9 s | server log |
+| Sheet bridge against a stand-in script: read tab, lead row, draft text, wrong token | 4 of 4 | `npm test` (server/test/live.test.ts) |
 
 The held-out set is no longer unseen after those fixes, so the 15 of 20 is the honest number for new phrasing.
 
@@ -98,6 +101,16 @@ npm run server                       # http://localhost:8787
 
 The app finds the server on load and shows `speech on, fallback on` in its event log. Set `VITE_ONHAND_SERVER` to point it somewhere else.
 
+To use your own Google Sheet:
+
+1. Create a Google Sheet and import `shared/fixtures/dubai_units.csv` (or your own stock with similar headers) into a tab named `Units`.
+2. Open Extensions, Apps Script, and paste `apps-script/Code.gs`.
+3. In Project Settings, add the script property `ONHAND_TOKEN` with a long random value.
+4. Deploy as a web app: execute as me, access anyone. Approve the Sheets and Gmail permissions.
+5. Put the web app URL in `SHEET_SCRIPT_URL` and the same token in `SHEET_SCRIPT_TOKEN` in `server/.env`, then restart the server.
+
+The app then lists the sheet first, for example `Agency stock: Units, 250 rows`. Tabs named `Menu` and `Cars` map to the other two schemas, and `SHEET_TABS` changes the mapping.
+
 Tests and checks:
 
 ```bash
@@ -115,19 +128,20 @@ npm run check:speech -- dubai-units clip.wav   # 16 kHz mono 16-bit WAV
 |---|---|
 | `shared/` | Normalizers, CSV loader, sheet schemas, parser, engine, lens screens, fixtures and tests. Runs in the app and the server. |
 | `app/` | The Even Hub app: ring input, session state, mic streaming, companion page. |
-| `server/` | Hono server: Deepgram relay at `/listen`, Claude fallback at `/fallback`. Keys stay here. |
+| `server/` | Hono server: Deepgram relay at `/listen`, Claude fallback at `/fallback`, live sheet at `/sheet/:id`, end of meeting at `/export`. Keys stay here. |
+| `apps-script/` | The Apps Script that sits in the Google Sheet. |
 | `scripts/` | Simulator input check and speech check. |
 
 ## Data and caveats
 
 - All three sheets are synthetic, made by `shared/scripts/gen-fixtures.ts` from a fixed seed. Project names, unit numbers and prices are invented.
 - Tested in the Even Hub simulator 0.9.5 with a PC microphone. It has not run on G2 hardware yet.
-- Saving the shortlist back to the sheet and drafting the follow-up email are not built yet. The recap screen says so.
+- The Gmail draft has no recipient. The agent adds the client's address before sending, and Onhand never sends email.
 - Speech needs a network connection. Without one, typed requests and replay still work.
 
 ## Built with
 
-Even Hub SDK 0.0.16 and simulator 0.9.5, TypeScript, Vite, Hono, Deepgram nova-3 streaming, Claude (Anthropic API with structured outputs), Vitest and fast-check.
+Even Hub SDK 0.0.16 and simulator 0.9.5, TypeScript, Vite, Hono, Deepgram nova-3 streaming, Claude (Anthropic API with structured outputs), Google Apps Script, Vitest and fast-check.
 
 ## License
 

@@ -92,6 +92,12 @@ export function mountUi(sheets: { id: string; name: string }[], h: UiHandlers) {
   injectStyles()
 }
 
+export function addSheetOption(id: string, name: string, select: boolean) {
+  const el = document.querySelector<HTMLSelectElement>('#sheet')!
+  if (!el.querySelector(`option[value="${id}"]`)) el.insertAdjacentHTML('afterbegin', `<option value="${id}">${name.replace(/</g, '&lt;')}</option>`)
+  if (select) el.value = id
+}
+
 export function pendingText(): string {
   const t = inputEl?.value ?? ''
   if (inputEl) inputEl.value = ''

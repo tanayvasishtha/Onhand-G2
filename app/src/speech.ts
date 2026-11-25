@@ -15,6 +15,42 @@ export interface Extra {
 export interface Health {
   speech: boolean
   fallback: boolean
+  /** The Google Sheet bridge is set up and answered. */
+  sheet: boolean
+  live: string[]
+  liveError?: string
+}
+
+export async function liveSheets(): Promise<{ id: string; name: string; csv: string }[]> {
+  const list = (await (await fetch(`${SERVER}/sheets`)).json()) as { id: string; name: string }[]
+  const out = []
+  for (const s of list.filter(x => x.id.startsWith('live-'))) {
+    const res = await fetch(`${SERVER}/sheet/${encodeURIComponent(s.id)}`)
+    if (res.ok) out.push({ id: s.id, name: s.name, csv: await res.text() })
+  }
+  return out
+}
+
+export interface LeadRequest {
+  sheet: string
+  shortlist: number[]
+  requests: number
+  filters: string
+  transcript: string[]
+}
+
+export async function exportLead(lead: LeadRequest): Promise<{ row: number; draftUrl: string } | { error: string }> {
+  try {
+    const res = await fetch(`${SERVER}/export`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(25000),
+    })
+    return (await res.json()) as { row: number; draftUrl: string } | { error: string }
+  } catch (err) {
+    return { error: (err as Error).message }
+  }
 }
 
 export async function health(): Promise<Health | null> {

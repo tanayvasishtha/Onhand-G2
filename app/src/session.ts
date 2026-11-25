@@ -40,6 +40,8 @@ export class Session {
   private flash = ''
   requests = 0
   transcript: string[] = []
+  /** Last line of the recap screen: where the shortlist went. */
+  exportNote = 'export not set up'
 
   constructor(public sheet: Sheet, public replay = false) {}
 
@@ -72,7 +74,7 @@ export class Session {
       case 'compare':
         return compareScreen(v, ...this.compared)
       case 'recap':
-        return recapScreen(v, this.requests, `${this.shortlist.size} saved | export not set up`)
+        return recapScreen(v, this.requests, this.exportNote)
     }
   }
 
@@ -206,6 +208,7 @@ export class Session {
     this.history = []
     this.requests = 0
     this.transcript = []
+    this.exportNote = 'export not set up'
     this.screen = 'ready'
   }
 }

@@ -1,4 +1,4 @@
-import { parse } from '@onhand/shared'
+import { describeFilter, parse } from '@onhand/shared'
 import {
   CreateStartUpPageContainer,
   MenuContainerProperty,
@@ -11,9 +11,9 @@ import {
 import { GestureFilter, toGesture, type Gesture } from './input'
 import { MENU, Session } from './session'
 import { Replay, SCRIPTS } from './replay'
-import { SHEETS } from './sheets'
-import { askFallback, health, Listening, type Health } from './speech'
-import { logEvent, mountUi, pendingText, setLens, setMic, setStatus } from './ui'
+import { addLive, SHEETS } from './sheets'
+import { askFallback, exportLead, health, liveSheets, Listening, type Health } from './speech'
+import { addSheetOption, logEvent, mountUi, pendingText, setLens, setMic, setStatus } from './ui'
 
 const LENS_ID = 1
 const LENS_NAME = 'lens'
@@ -21,7 +21,7 @@ const LENS_NAME = 'lens'
 const params = new URLSearchParams(location.search)
 const script = SCRIPTS[params.get('replay') ?? '']
 const replay = script ? new Replay(script.lines) : null
-let session = new Session(SHEETS[script?.sheet ?? 'dubai-units'](), true)
+let session = new Session(SHEETS[script?.sheet ?? 'dubai-units'](), !!script)
 let bridge: EvenAppBridge | null = null
 const filter = new GestureFilter()
 
@@ -47,7 +47,7 @@ mountUi(
       render()
     },
     onSheet: id => {
-      session = new Session(SHEETS[id](), true)
+      session = new Session(SHEETS[id](), !!script)
       render()
     },
     onKey: (kind, id) => handle(kind === 'menu' ? { kind, id: id!, source: -1 } : { kind, source: -1 }),
@@ -82,6 +82,7 @@ function handle(g: Gesture) {
       return
     case 'menu':
       session.menu(g.id)
+      if (g.id === 5) void endMeeting()
       break
     case 'exit':
       // Platform contract: double tap on the root page opens the system exit dialog.
@@ -112,6 +113,29 @@ async function release() {
     busy = false
     render()
   }
+}
+
+/** End meeting: the shortlist becomes a row on the Leads tab and a Gmail draft. */
+async function endMeeting() {
+  const s = session
+  if (!s.shortlist.size) {
+    s.exportNote = 'nothing shortlisted'
+    return render()
+  }
+  if (!server?.sheet) return
+  s.exportNote = 'saving to sheet...'
+  render()
+  const out = await exportLead({
+    sheet: s.sheet.schema.id,
+    shortlist: [...s.shortlist],
+    requests: s.requests,
+    filters: s.query.filters.map(f => describeFilter(f, s.sheet.schema)).join(' | '),
+    transcript: s.transcript,
+  })
+  console.log(`[onhand:export] ${JSON.stringify(out)}`)
+  s.exportNote = 'error' in out ? `not saved: ${out.error.slice(0, 40)}` : `lead row ${out.row} saved | draft in Gmail`
+  if (!('error' in out)) logEvent(`lead row ${out.row} saved, draft: ${out.draftUrl}`)
+  render()
 }
 
 function hasTyped() {
@@ -147,6 +171,20 @@ async function connect(): Promise<EvenAppBridge | null> {
 render()
 server = await health()
 console.log(`[onhand:server] ${JSON.stringify(server)}`)
+if (server?.liveError) logEvent(`google sheet: ${server.liveError}`)
+if (server?.live.length) {
+  // The client's real sheet replaces the bundled one, except in replay mode.
+  for (const l of await liveSheets().catch(() => [])) {
+    if (!addLive(l.id, l.name, l.csv)) continue
+    const pick = !script && l.id === server.live[0]
+    addSheetOption(l.id, l.name, pick)
+    if (pick) {
+      session = new Session(SHEETS[l.id](), false)
+      render()
+    }
+    logEvent(`google sheet: ${l.name}, ${SHEETS[l.id]().rows.length} rows`)
+  }
+}
 logEvent(server ? `server: speech ${server.speech ? 'on' : 'off'}, fallback ${server.fallback ? 'on' : 'off'}` : 'no server: typed text and replay only')
 if (script) logEvent(`replay "${params.get('replay')}": each hold and release plays the next line`)
 bridge = await connect()
