@@ -1,0 +1,83 @@
+# sheet | request   (expected lines are added in cases.ts after review)
+dubai-units | two bed in marina under two and a half million with a sea view
+dubai-units | something that allows pets
+dubai-units | three bedroom under 2 million
+dubai-units | forget the view
+dubai-units | start over studio in JVC under 700k ready to move in
+dubai-units | um so they want like a one bed in downtown, budget is around one point five
+dubai-units | anything in Palm with a sea view over 5 million
+dubai-units | ready units only
+dubai-units | off plan handover by 2027
+dubai-units | what's the cheapest two bed in business bay
+dubai-units | biggest three bed in JLT
+dubai-units | furnished please
+dubai-units | not furnished
+dubai-units | no pets
+dubai-units | between 1.2 and 1.8 million
+dubai-units | max AED 1,800,000
+dubai-units | at least 1500 square feet
+dubai-units | over 2000 sqft
+dubai-units | four bed villa in Dubai Hills
+dubai-units | anything but Marina
+dubai-units | not JVC or JLT
+dubai-units | how many are there
+dubai-units | compare 1 and 2
+dubai-units | tell me more about number 3
+dubai-units | budget doesn't matter
+dubai-units | drop the area
+dubai-units | two or three bed
+dubai-units | something with a golf view
+dubai-units | high floor, above 30
+dubai-units | Harbour Crest
+dubai-units | do you have anything at Seawind Tower
+dubai-units | handover in Q3 2026
+dubai-units | under 3m pet friendly in marina or JBR
+dubai-units | they have a dog, need it ready, two bedrooms
+dubai-units | 2BR
+dubai-units | a 2 bedroom under 2.4 mil
+dubai-units | something around 2 million
+dubai-units | lowest price first
+dubai-units | most expensive
+dubai-units | city view or community view
+# menu
+restaurant-menu | does the risotto have nuts
+restaurant-menu | something vegan with no nuts
+restaurant-menu | cheapest dessert without dairy
+restaurant-menu | I'm allergic to shellfish
+restaurant-menu | gluten free mains
+restaurant-menu | vegetarian starters under 60
+restaurant-menu | nothing spicy
+restaurant-menu | spicy food, level 3
+restaurant-menu | anything without egg or dairy
+restaurant-menu | is the calamari gluten free
+restaurant-menu | mains under 100 dirhams
+restaurant-menu | what's vegan
+restaurant-menu | she can't have sesame
+restaurant-menu | no pine nuts
+restaurant-menu | show me the desserts
+restaurant-menu | cheapest starter
+restaurant-menu | nut free dessert
+restaurant-menu | veggie options
+restaurant-menu | how many dishes are vegan
+restaurant-menu | does the burrata have dairy
+# cars
+car-stock | a white SUV under 90k
+car-stock | 2022 or newer with under 50,000 km
+car-stock | show me the cheapest
+car-stock | Toyota or Lexus
+car-stock | not a sedan
+car-stock | electric under 150k
+car-stock | hybrid
+car-stock | low mileage, under 20000 km
+car-stock | black or grey
+car-stock | anything from 2020 to 2022
+car-stock | a Land Cruiser
+car-stock | budget 60 thousand
+car-stock | newest first
+car-stock | in Al Quoz
+car-stock | no Kia
+car-stock | red hatchback
+car-stock | pickup truck
+car-stock | under 30k petrol
+car-stock | Nissan Patrol 2023
+car-stock | forget the colour

@@ -1,0 +1,22 @@
+# Written after the parser fixes and never tuned against. Expected after "=>".
+# First run 2026-11-26: 15/20. Five misses fixed after that, so this set is no longer unseen.
+dubai-units | need a 3 bed in dubai hills under 4 million => area Dubai Hills; beds 3..3; price ..4000000
+dubai-units | something ready in JVC for under 1.2 => area JVC; handover ..0; price ..1200000
+dubai-units | two bedroom, pets allowed, furnished => beds 2..2; furnished yes; pets yes
+dubai-units | above the 20th floor => floor 20..
+dubai-units | one bed or studio under 900k => beds 0..1; price ..900000
+dubai-units | creek harbour off plan => area Creek Harbour; handover 1..
+dubai-units | the client doesn't want Downtown => area not_in Downtown
+dubai-units | 1.5 to 2 million => price 1500000..2000000
+dubai-units | pets don't matter => drop pets
+dubai-units | cheapest in Arjan => area Arjan; sort price asc
+restaurant-menu | any pasta without gluten => allergens lacks gluten; section Pasta
+restaurant-menu | vegan desserts under 50 => price ..50; section Desserts; vegan yes
+restaurant-menu | mild mains => section Grill; spice ..0
+restaurant-menu | no fish no shellfish => allergens lacks fish,shellfish
+restaurant-menu | which pizzas are vegetarian => section Pizza; vegetarian yes
+car-stock | silver sedan under 40k => body Sedan; colour Silver; price ..40000
+car-stock | a Toyota from 2021 or newer => make Toyota; year 2021..
+car-stock | SUV under 100k with less than 60000 km => body SUV; mileage ..60000; price ..100000
+car-stock | diesel pickup => body Pickup; fuel Diesel
+car-stock | cheapest electric => fuel Electric; sort price asc

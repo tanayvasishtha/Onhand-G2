@@ -1,0 +1,684 @@
+[
+ {
+  "sheet": "dubai-units",
+  "text": "two bed in marina under two and a half million with a sea view",
+  "expect": [
+   "area Dubai Marina",
+   "beds 2..2",
+   "price ..2500000",
+   "view Sea"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "something that allows pets",
+  "expect": [
+   "pets yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "three bedroom under 2 million",
+  "expect": [
+   "beds 3..3",
+   "price ..2000000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "forget the view",
+  "expect": [
+   "drop view"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "start over studio in JVC under 700k ready to move in",
+  "expect": [
+   "area JVC",
+   "beds 0..0",
+   "clear",
+   "handover ..0",
+   "price ..700000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "um so they want like a one bed in downtown, budget is around one point five",
+  "expect": [
+   "area Downtown",
+   "beds 1..1",
+   "price 1350000..1650000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "anything in Palm with a sea view over 5 million",
+  "expect": [
+   "area Palm Jumeirah",
+   "price 5000000..",
+   "view Sea"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "ready units only",
+  "expect": [
+   "handover ..0"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "off plan handover by 2027",
+  "expect": [
+   "handover ..24335"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "what's the cheapest two bed in business bay",
+  "expect": [
+   "area Business Bay",
+   "beds 2..2",
+   "sort price asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "biggest three bed in JLT",
+  "expect": [
+   "area JLT",
+   "beds 3..3",
+   "sort size desc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "furnished please",
+  "expect": [
+   "furnished yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "not furnished",
+  "expect": [
+   "furnished no"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "no pets",
+  "expect": [
+   "pets no"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "between 1.2 and 1.8 million",
+  "expect": [
+   "price 1200000..1800000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "max AED 1,800,000",
+  "expect": [
+   "price ..1800000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "at least 1500 square feet",
+  "expect": [
+   "size 1500.."
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "over 2000 sqft",
+  "expect": [
+   "size 2000.."
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "four bed villa in Dubai Hills",
+  "expect": [
+   "area Dubai Hills",
+   "beds 4..4"
+  ],
+  "unparsed": "villa"
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "anything but Marina",
+  "expect": [
+   "area not_in Dubai Marina"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "not JVC or JLT",
+  "expect": [
+   "area not_in JLT,JVC"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "how many are there",
+  "expect": [
+   "count"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "compare 1 and 2",
+  "expect": [
+   "compare 1 2"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "tell me more about number 3",
+  "expect": [
+   "detail 3"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "budget doesn't matter",
+  "expect": [
+   "drop price"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "drop the area",
+  "expect": [
+   "drop area"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "two or three bed",
+  "expect": [
+   "beds 2..3"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "something with a golf view",
+  "expect": [
+   "view Golf"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "high floor, above 30",
+  "expect": [
+   "floor 30.."
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "Harbour Crest",
+  "expect": [
+   "project ~harbour crest"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "do you have anything at Seawind Tower",
+  "expect": [
+   "project ~seawind tower"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "handover in Q3 2026",
+  "expect": [
+   "handover ..24320"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "under 3m pet friendly in marina or JBR",
+  "expect": [
+   "area Dubai Marina",
+   "pets yes",
+   "price ..3000000"
+  ],
+  "unparsed": "jbr"
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "they have a dog, need it ready, two bedrooms",
+  "expect": [
+   "beds 2..2",
+   "handover ..0",
+   "pets yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "2BR",
+  "expect": [
+   "beds 2..2"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "a 2 bedroom under 2.4 mil",
+  "expect": [
+   "beds 2..2",
+   "price ..2400000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "something around 2 million",
+  "expect": [
+   "price 1800000..2200000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "lowest price first",
+  "expect": [
+   "sort price asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "most expensive",
+  "expect": [
+   "sort price desc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "dubai-units",
+  "text": "city view or community view",
+  "expect": [
+   "view City,Community"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "does the risotto have nuts",
+  "expect": [
+   "section Risotto"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "something vegan with no nuts",
+  "expect": [
+   "allergens lacks nuts",
+   "vegan yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "cheapest dessert without dairy",
+  "expect": [
+   "allergens lacks dairy",
+   "section Desserts",
+   "sort price asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "I'm allergic to shellfish",
+  "expect": [
+   "allergens lacks shellfish"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "gluten free mains",
+  "expect": [
+   "allergens lacks gluten",
+   "section Grill"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "vegetarian starters under 60",
+  "expect": [
+   "price ..60",
+   "section Starters",
+   "vegetarian yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "nothing spicy",
+  "expect": [
+   "spice ..0"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "spicy food, level 3",
+  "expect": [
+   "spice 3..3"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "anything without egg or dairy",
+  "expect": [
+   "allergens lacks dairy,egg"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "is the calamari gluten free",
+  "expect": [
+   "allergens lacks gluten",
+   "dish ~calamari"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "mains under 100 dirhams",
+  "expect": [
+   "price ..100",
+   "section Grill"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "what's vegan",
+  "expect": [
+   "vegan yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "she can't have sesame",
+  "expect": [
+   "allergens lacks sesame"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "no pine nuts",
+  "expect": [
+   "allergens lacks nuts"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "show me the desserts",
+  "expect": [
+   "section Desserts"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "cheapest starter",
+  "expect": [
+   "section Starters",
+   "sort price asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "nut free dessert",
+  "expect": [
+   "allergens lacks nuts",
+   "section Desserts"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "veggie options",
+  "expect": [
+   "vegetarian yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "how many dishes are vegan",
+  "expect": [
+   "count",
+   "vegan yes"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "restaurant-menu",
+  "text": "does the burrata have dairy",
+  "expect": [
+   "dish ~burrata"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "a white SUV under 90k",
+  "expect": [
+   "body SUV",
+   "colour White",
+   "price ..90000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "2022 or newer with under 50,000 km",
+  "expect": [
+   "mileage ..50000",
+   "year 2022.."
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "show me the cheapest",
+  "expect": [
+   "sort price asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "Toyota or Lexus",
+  "expect": [
+   "make Lexus,Toyota"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "not a sedan",
+  "expect": [
+   "body not_in Sedan"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "electric under 150k",
+  "expect": [
+   "fuel Electric",
+   "price ..150000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "hybrid",
+  "expect": [
+   "fuel Hybrid"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "low mileage, under 20000 km",
+  "expect": [
+   "mileage ..20000",
+   "sort mileage asc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "black or grey",
+  "expect": [
+   "colour Black,Grey"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "anything from 2020 to 2022",
+  "expect": [
+   "year 2020..2022"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "a Land Cruiser",
+  "expect": [
+   "vehicle ~land cruiser"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "budget 60 thousand",
+  "expect": [
+   "price ..60000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "newest first",
+  "expect": [
+   "sort year desc"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "in Al Quoz",
+  "expect": [
+   "location Al Quoz"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "no Kia",
+  "expect": [
+   "make not_in Kia"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "red hatchback",
+  "expect": [
+   "body Hatchback",
+   "colour Red"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "pickup truck",
+  "expect": [
+   "body Pickup"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "under 30k petrol",
+  "expect": [
+   "fuel Petrol",
+   "price ..30000"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "Nissan Patrol 2023",
+  "expect": [
+   "make Nissan",
+   "vehicle ~patrol",
+   "year 2023..2023"
+  ],
+  "unparsed": ""
+ },
+ {
+  "sheet": "car-stock",
+  "text": "forget the colour",
+  "expect": [
+   "drop colour"
+  ],
+  "unparsed": ""
+ }
+]
