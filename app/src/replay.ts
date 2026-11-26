@@ -8,6 +8,7 @@ export const SCRIPTS: Record<string, { sheet: string; lines: string[] }> = {
     lines: [
       'Two-bed in Marina, under two and a half, sea view',
       'Actually, it has to allow pets',
+      'Book a viewing for number 1 on Saturday at 11',
       'What about three bed under two?',
       'Forget the view',
       'Start over. Studio in JVC under 700k, ready to move in',

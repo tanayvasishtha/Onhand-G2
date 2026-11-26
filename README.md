@@ -4,9 +4,9 @@ Onhand puts your Google Sheet on Even Realities G2 glasses during a client meeti
 
 Built for the Even Realities G2 "Heads Up" hackathon, track AI Assistants & Work.
 
-![Six lens screens from the Even Hub simulator: listening, results, results after "it has to allow pets", nearest match when nothing fits, the contextual menu, and row details](docs/lens.png)
+![Six lens screens from the Even Hub simulator: results, results after "it has to allow pets" with two rows shortlisted, the booking confirm screen, nearest match when nothing fits, listening, and row details](docs/lens.png)
 
-*Captured from the Even Hub simulator 0.9.5 during a scripted meeting. Left to right, top to bottom: listening, first results, after "it has to allow pets" with two rows shortlisted, a request with no exact match, the ring menu, row details.*
+*Captured from the Even Hub simulator 0.9.5 during a scripted meeting. Left to right, top to bottom: first results, after "it has to allow pets" with two rows shortlisted, "book a viewing for number 1 on Saturday at 11", a request with no exact match, listening, row details.*
 
 ## The problem
 
@@ -76,6 +76,8 @@ All numbers come from scripts in this repo.
 | Claude fallback on 2 requests the sheet cannot answer | correct notes in 1.7 to 3.9 s | server log |
 | Sheet bridge against a stand-in script: read tab, lead row, draft text, wrong token | 4 of 4 | `npm test` (server/test/live.test.ts) |
 | Real Google Sheet: 250 units read, 2 requests, 2 rows shortlisted, End meeting | Leads row 2 written with rows r12 and r43, Gmail draft created, about 15 s with a cold Apps Script | manual run, Nov 26 |
+| Real Google Calendar: "book a viewing for number 2 on Saturday at 11", tap | Event "Viewing: Harbour Crest #1804" on Sat 28 Nov 11:00 to 11:30, Leads row 3 records the booking | manual run, Nov 26 |
+| Real Google Sheet with a tab Onhand had no schema for (Showroom) | 12 rows read, "a grey sofa under 4000 that is in stock" returns the one match | manual run, Nov 26 |
 
 The held-out set is no longer unseen after those fixes, so the 15 of 20 is the honest number for new phrasing.
 
@@ -132,7 +134,7 @@ npm run check:speech -- dubai-units clip.wav   # 16 kHz mono 16-bit WAV
 ## Deploy
 
 - **Server:** `render.yaml` is a Render blueprint for the free plan. Create a Blueprint from this repo and set `DEEPGRAM_API_KEY`, `ANTHROPIC_API_KEY`, `SHEET_SCRIPT_URL` and `SHEET_SCRIPT_TOKEN` in the dashboard. The free plan sleeps after 15 minutes idle and takes about 50 s to wake, so open `/health` before a meeting.
-- **App:** `npm run pack -w app` builds `app/out.ehpk` (about 67 KB) for Even Hub. The production build talks to `https://onhand-g2.onrender.com`, set in `app/.env.production`, and `app/app.json` whitelists that origin for HTTPS and WebSocket.
+- **App:** `npm run pack -w app` builds `app/out.ehpk` (about 70 KB) for Even Hub. The production build talks to `https://onhand-g2.onrender.com`, set in `app/.env.production`, and `app/app.json` whitelists that origin for HTTPS and WebSocket.
 
 ## Layout
 
