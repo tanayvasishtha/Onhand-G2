@@ -11,7 +11,7 @@ import { cors } from 'hono/cors'
 import { applyPatch, carStock, dubaiUnits, loadCsv, parse, restaurantMenu, run, type FilterPatch, type Query, type Sheet } from '@onhand/shared'
 import { fallback, fallbackEnabled } from './fallback'
 import { attachListen, speechEnabled } from './listen'
-import { liveEnabled, loadLive, saveLead, type LiveSheet } from './live'
+import { bookEvent, liveEnabled, loadLive, saveLead, type LiveSheet } from './live'
 
 const fixture = (f: string) => readFileSync(new URL(`../../shared/fixtures/${f}`, import.meta.url), 'utf8')
 
@@ -55,9 +55,22 @@ app.get('/sheet/:id', async c => {
   return c.text(l.csv, 200, { 'content-type': 'text/csv; charset=utf-8' })
 })
 
+/** Tap on the confirm screen: a Google Calendar event for one row. */
+app.post('/book', async c => {
+  const body = await c.req.json<{ sheet: string; r: number; what: string; when: { y: number; m: number; d: number; h: number; min: number; label: string }; minutes?: number }>()
+  const sheet = sheets[body.sheet]
+  if (!sheet) return c.json({ error: `unknown sheet ${body.sheet}` }, 404)
+  if (!body.when?.y) return c.json({ error: 'no time given' }, 400)
+  try {
+    return c.json(await bookEvent({ sheet, r: body.r, what: body.what || 'viewing', when: body.when, minutes: Math.min(Math.max(body.minutes ?? 30, 15), 180) }))
+  } catch (err) {
+    return c.json({ error: (err as Error).message }, 502)
+  }
+})
+
 /** End of meeting: shortlist -> a row on the Leads tab and a Gmail draft. */
 app.post('/export', async c => {
-  const body = await c.req.json<{ sheet: string; shortlist: number[]; requests: number; filters: string; transcript: string[] }>()
+  const body = await c.req.json<{ sheet: string; shortlist: number[]; requests: number; filters: string; transcript: string[]; bookings?: { r: number; what: string; label: string }[] }>()
   const sheet = sheets[body.sheet]
   if (!sheet) return c.json({ error: `unknown sheet ${body.sheet}` }, 404)
   if (!body.shortlist?.length) return c.json({ error: 'nothing shortlisted' }, 400)

@@ -80,6 +80,7 @@ export interface LeadInput {
   requests: number
   filters: string
   transcript: string[]
+  bookings?: { r: number; what: string; label: string }[]
   client?: string
 }
 
@@ -104,6 +105,8 @@ export function rowLine(sheet: Sheet, r: number): string {
 export function draftText(input: LeadInput): { subject: string; body: string; lines: { r: number; line: string }[] } {
   const lines = input.shortlist.map(r => ({ r, line: rowLine(input.sheet, r) }))
   const n = lines.length
+  const option = (r: number) => lines.findIndex(l => l.r === r) + 1
+  const booked = (input.bookings ?? []).map(b => `We are booked to see option ${option(b.r) || `in sheet row ${b.r}`} on ${b.label.replace(',', ' at')}.`)
   const subject = n === 1 ? 'The option we talked about today' : `The ${n} options we talked about today`
   const body = [
     'Hi,',
@@ -112,7 +115,7 @@ export function draftText(input: LeadInput): { subject: string; body: string; li
     '',
     ...lines.map((l, i) => `${i + 1}. ${l.line}`),
     '',
-    'Tell me which ones you would like to see and I will set it up.',
+    ...(booked.length ? [...booked, '', 'Tell me if you would like to see any of the others too.'] : ['Tell me which ones you would like to see and I will set it up.']),
   ].join('\n')
   return { subject, body, lines }
 }
@@ -132,6 +135,7 @@ export async function saveLead(input: LeadInput): Promise<{ row: number; draftUr
       filters: input.filters,
       transcript: input.transcript,
       shortlist: lines,
+      bookings: (input.bookings ?? []).map(b => `${b.what} ${b.label}, row ${b.r}`),
       subject,
       body,
     }),
@@ -141,4 +145,38 @@ export async function saveLead(input: LeadInput): Promise<{ row: number; draftUr
   const out = (await res.json()) as { ok: boolean; row?: number; draftUrl?: string; error?: string }
   if (!out.ok) throw new Error(`sheet script: ${out.error}`)
   return { row: out.row!, draftUrl: out.draftUrl! }
+}
+
+export interface BookInput {
+  sheet: Sheet
+  r: number
+  what: string
+  when: { y: number; m: number; d: number; h: number; min: number; label: string }
+  minutes: number
+}
+
+/** A Google Calendar event for one row, through the same Apps Script bridge. */
+export async function bookEvent(input: BookInput): Promise<{ ok: true; start: string }> {
+  if (!liveEnabled()) throw new Error('no sheet script configured')
+  const row = input.sheet.rows.find(x => x.r === input.r)
+  const name = row ? String(row.raw[input.sheet.schema.titleKey] ?? '').trim() : `row ${input.r}`
+  const unit = row?.raw.unit ? ` #${row.raw.unit}` : ''
+  const what = input.what[0].toUpperCase() + input.what.slice(1)
+  const res = await fetch(url(), {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      token: token(),
+      action: 'book',
+      title: `${what}: ${name}${unit}`,
+      description: `${rowLine(input.sheet, input.r)}\nBooked from Onhand during a client meeting.`,
+      when: input.when,
+      minutes: input.minutes,
+    }),
+    redirect: 'follow',
+    signal: AbortSignal.timeout(20000),
+  })
+  const out = (await res.json()) as { ok: boolean; start?: string; error?: string }
+  if (!out.ok) throw new Error(`sheet script: ${out.error}`)
+  return { ok: true, start: out.start ?? '' }
 }

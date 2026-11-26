@@ -54,7 +54,8 @@ nearest, eased: pets, Sea, budget
 4. **Claude fallback.** Claude is asked only when the parser leaves words it could not use, and only about those words. It returns a structured filter object. Every filter is checked against the sheet before use, and a made-up column or value is dropped. If the sheet cannot answer, the lens gets a short note such as "no JBR in this sheet".
 5. **Engine.** Plain code filters the rows. A blank cell never counts as a no: those rows come after the sure matches, marked `?`. When nothing matches, the engine loosens filters one at a time in the order the sheet defines (pets, furnished, view, price, handover, area, bedrooms). For price it switches to the rows closest to the budget. It never loosens an allergen or an exclusion.
 
-6. **Sheet.** A short Apps Script in the sheet (`apps-script/Code.gs`) serves each tab as displayed values, so prices like "AED 2.35m" and "2,350,000" arrive the way the agent typed them and go through the same loader. End meeting appends one row to a Leads tab (date, filters, shortlisted rows, what the client said, draft link) and creates a Gmail draft that lists each option with its sheet row number. The script answers only calls that carry a token, and only the server knows the token.
+6. **Book by voice.** "Book a viewing for number 1 on Saturday at 11" shows a confirm screen with the row and the time. A tap creates a 30 minute Google Calendar event with the unit's details, and the follow-up email says which option is booked. Swipe or hold cancels. The day and time parser handles "tomorrow at 5", "next Monday morning" and "on the 3rd at 4:30 pm" (`shared/test/when.test.ts`).
+7. **Sheet.** A short Apps Script in the sheet (`apps-script/Code.gs`) serves each tab as displayed values, so prices like "AED 2.35m" and "2,350,000" arrive the way the agent typed them and go through the same loader. End meeting appends one row to a Leads tab (date, filters, shortlisted rows, what the client said, draft link) and creates a Gmail draft that lists each option with its sheet row number. The script answers only calls that carry a token, and only the server knows the token.
 
 Claude never sees or filters the rows. A wrong answer from the model can at most add a filter on a real column, and that filter shows on the first line of the lens.
 
@@ -66,7 +67,7 @@ All numbers come from scripts in this repo.
 
 | Check | Result | Command |
 |---|---|---|
-| Unit and property tests | 238 passed | `npm test` |
+| Unit and property tests | 250 passed | `npm test` |
 | Parser, 80 meeting requests across 3 sheets, each expected answer reviewed by hand | 80 of 80 | `npm test` (shared/test/parse-eval.test.ts) |
 | Parser, 20 requests written after tuning | 15 of 20 on first run, 20 of 20 after fixing the 5 misses | `npm run eval:parser` |
 | Engine properties, 1,000 random queries | every sure row passes every filter, every maybe row fails none | `npm test` (engine.test.ts) |
@@ -158,7 +159,7 @@ npm run check:speech -- dubai-units clip.wav   # 16 kHz mono 16-bit WAV
 
 ## Built with
 
-Even Hub SDK 0.0.16 and simulator 0.9.5, TypeScript, Vite, Hono, Deepgram nova-3 streaming, Claude (Anthropic API with structured outputs), Google Apps Script, Vitest and fast-check.
+Even Hub SDK 0.0.16 and simulator 0.9.5, TypeScript, Vite, Hono, Deepgram nova-3 streaming, Claude (Anthropic API with structured outputs), Google Sheets, Gmail and Calendar through Apps Script, Vitest and fast-check.
 
 ## License
 

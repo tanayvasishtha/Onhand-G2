@@ -227,11 +227,12 @@ export function compareScreen(s: ViewState, a: number, b: number): string {
   return finish(lines)
 }
 
-export function recapScreen(s: ViewState, requests: number, note: string): string {
+export function recapScreen(s: ViewState, requests: number, note: string, booked: string[] = []): string {
   const { schema } = s.sheet
   const rows = s.sheet.rows.filter(r => s.shortlist.has(r.r))
-  const lines = [`Meeting ended | ${requests} requests`, `${s.shortlist.size} shortlisted`]
-  for (const row of rows.slice(0, 4)) lines.push(`★ ${cardLine({ row, unsure: [] }, schema)}`)
+  const lines = [`Meeting ended | ${requests} requests`, `${s.shortlist.size} shortlisted${booked.length ? ` | ${booked.length} booked` : ''}`]
+  for (const row of rows.slice(0, 4 - Math.min(booked.length, 2))) lines.push(`★ ${cardLine({ row, unsure: [] }, schema)}`)
+  for (const b of booked.slice(0, 2)) lines.push(b)
   lines.push(note)
   return finish(lines)
 }
@@ -249,4 +250,29 @@ function wrap(text: string, maxLines: number): string[] {
   }
   if (cur) out.push(cur)
   return out.slice(-maxLines)
+}
+
+export interface BookingView {
+  r: number
+  what: string
+  label: string
+  minutes: number
+}
+
+/** "Book viewing?" with the row and the time; a tap books it in Google Calendar. */
+export function confirmScreen(s: ViewState, b: BookingView): string {
+  const { schema } = s.sheet
+  const row = s.sheet.rows.find(x => x.r === b.r)
+  const end = b.label.replace(/(\d{2}):(\d{2})$/, (_, h, m) => {
+    const t = Number(h) * 60 + Number(m) + b.minutes
+    return `${h}:${m} to ${String(Math.floor(t / 60) % 24).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`
+  })
+  return finish([
+    `Book ${b.what}?`,
+    row ? cardLine({ row, unsure: [] }, schema) : `row ${b.r}`,
+    end,
+    'goes into your Google Calendar',
+    '',
+    'tap: book it   swipe: cancel',
+  ])
 }

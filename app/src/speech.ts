@@ -37,6 +37,31 @@ export interface LeadRequest {
   requests: number
   filters: string
   transcript: string[]
+  bookings: { r: number; what: string; label: string }[]
+}
+
+export interface BookRequest {
+  sheet: string
+  r: number
+  what: string
+  when: { y: number; m: number; d: number; h: number; min: number; label: string }
+  minutes: number
+}
+
+/** Creates the Google Calendar event through the server. */
+export async function bookOnCalendar(b: BookRequest): Promise<{ ok: true } | { error: string }> {
+  try {
+    const res = await fetch(`${SERVER}/book`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(b),
+      signal: AbortSignal.timeout(25000),
+    })
+    const out = (await res.json()) as { ok?: boolean; error?: string }
+    return out.ok ? { ok: true } : { error: out.error ?? `server answered ${res.status}` }
+  } catch (err) {
+    return { error: (err as Error).message }
+  }
 }
 
 export async function exportLead(lead: LeadRequest): Promise<{ row: number; draftUrl: string } | { error: string }> {

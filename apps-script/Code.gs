@@ -9,10 +9,11 @@
  * GET  ?token=...&action=read&tab=Units -> the tab as CSV, values as displayed
  * POST { token, action: "lead", ... }   -> appends a row to the Leads tab and
  *                                          creates a Gmail draft
+ * POST { token, action: "book", ... }   -> creates a Google Calendar event
  */
 
 var LEADS_TAB = 'Leads';
-var LEAD_HEADERS = ['Date', 'Client', 'Source tab', 'Requests', 'Last filters', 'Shortlisted rows', 'Shortlist', 'What the client said', 'Draft'];
+var LEAD_HEADERS = ['Date', 'Client', 'Source tab', 'Requests', 'Last filters', 'Shortlisted rows', 'Shortlist', 'What the client said', 'Draft', 'Booked'];
 
 function doGet(e) {
   var p = (e && e.parameter) || {};
@@ -40,6 +41,7 @@ function doPost(e) {
     return json_({ ok: false, error: 'body is not JSON' });
   }
   if (!authorised_(body.token)) return json_({ ok: false, error: 'bad token' });
+  if (body.action === 'book') return book_(body);
   if (body.action !== 'lead') return json_({ ok: false, error: 'unknown action' });
 
   var lock = LockService.getScriptLock();
@@ -60,11 +62,22 @@ function doPost(e) {
       shortlist.map(function (s) { return s.line; }).join('\n'),
       (body.transcript || []).join('\n'),
       draftUrl,
+      (body.bookings || []).join('\n'),
     ]);
     return json_({ ok: true, row: leads.getLastRow(), draftUrl: draftUrl });
   } finally {
     lock.releaseLock();
   }
+}
+
+/** One event on the default calendar, in the calendar's own time zone. */
+function book_(body) {
+  var w = body.when || {};
+  if (!w.y || !w.m || !w.d) return json_({ ok: false, error: 'no date' });
+  var start = new Date(w.y, w.m - 1, w.d, w.h || 0, w.min || 0);
+  var end = new Date(start.getTime() + (body.minutes || 30) * 60000);
+  var event = CalendarApp.getDefaultCalendar().createEvent(body.title || 'Viewing', start, end, { description: body.description || '' });
+  return json_({ ok: true, eventId: event.getId(), start: start.toString() });
 }
 
 /** The sheet this script sits in, or, for a standalone script, the one named by the SHEET_ID property. */
@@ -99,6 +112,7 @@ function setup() {
   }
   var ss = book_();
   GmailApp.getDrafts();
+  CalendarApp.getDefaultCalendar().getName();
   Logger.log('Sheet: ' + ss.getName() + ', tabs: ' + ss.getSheets().map(function (s) { return s.getName(); }).join(', '));
   Logger.log('ONHAND_TOKEN=' + token);
 }

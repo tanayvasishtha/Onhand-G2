@@ -91,3 +91,18 @@ describe('every screen fits the lens', () => {
     expect(safe('2BR · Marina ≤2.5M … “sea” — ok ₹')).toBe('2BR | Marina <=2.5M .. "sea" - ok ')
   })
 })
+
+describe('booking confirm screen', () => {
+  it('shows the row, the time span and how to confirm, within the lens', async () => {
+    const { confirmScreen } = await import('../src/lens')
+    const { units } = await import('./fixtures')
+    const s = confirmScreen(
+      { sheet: units, query: { filters: [] }, result: null, highlight: 0, shortlist: new Set(), listening: false, heard: '' },
+      { r: 43, what: 'viewing', label: 'Sat 28 Nov, 11:00', minutes: 30 },
+    )
+    expect(s.split('\n')[0]).toBe('Book viewing?')
+    expect(s).toContain('Harbour Crest')
+    expect(s).toContain('Sat 28 Nov, 11:00 to 11:30')
+    expect(s.split('\n').length).toBeLessThanOrEqual(8)
+  })
+})

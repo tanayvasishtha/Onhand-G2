@@ -12,7 +12,7 @@ import { GestureFilter, toGesture, type Gesture } from './input'
 import { MENU, Session } from './session'
 import { Replay, SCRIPTS } from './replay'
 import { addLive, SHEETS } from './sheets'
-import { askFallback, exportLead, health, liveSheets, Listening, type Health } from './speech'
+import { askFallback, bookOnCalendar, exportLead, health, liveSheets, Listening, type Health } from './speech'
 import { addSheetOption, logEvent, mountUi, pendingText, setLens, setMic, setStatus } from './ui'
 
 const LENS_ID = 1
@@ -58,6 +58,10 @@ function handle(g: Gesture) {
   if (busy) return
   switch (g.kind) {
     case 'tap':
+      if (session.screen === 'confirm') {
+        void book()
+        return
+      }
       session.tap()
       break
     case 'next':
@@ -115,6 +119,25 @@ async function release() {
   }
 }
 
+/** Tap on the confirm screen: the viewing goes into Google Calendar. */
+async function book() {
+  const s = session
+  const b = s.confirm()
+  render()
+  if (!b) return
+  if (!server?.sheet) {
+    b.status = 'failed'
+    s.flash = 'calendar not set up'
+    return render()
+  }
+  const out = await bookOnCalendar({ sheet: s.sheet.schema.id, r: b.r, what: b.what, when: b.when, minutes: b.minutes })
+  console.log(`[onhand:book] ${JSON.stringify(out)}`)
+  b.status = 'error' in out ? 'failed' : 'booked'
+  s.flash = 'error' in out ? `not booked: ${out.error.slice(0, 40)}` : `${b.what} booked ${b.when.label}`
+  logEvent(s.flash)
+  render()
+}
+
 /** End meeting: the shortlist becomes a row on the Leads tab and a Gmail draft. */
 async function endMeeting() {
   const s = session
@@ -131,6 +154,7 @@ async function endMeeting() {
     requests: s.requests,
     filters: s.query.filters.map(f => describeFilter(f, s.sheet.schema)).join(' | '),
     transcript: s.transcript,
+    bookings: s.bookings.filter(b => b.status === 'booked').map(b => ({ r: b.r, what: b.what, label: b.when.label })),
   })
   console.log(`[onhand:export] ${JSON.stringify(out)}`)
   s.exportNote = 'error' in out ? `not saved: ${out.error.slice(0, 40)}` : `lead row ${out.row} saved | draft in Gmail`

@@ -127,6 +127,8 @@ export type Command =
   | { kind: 'count' }
   | { kind: 'detail'; index: number }
   | { kind: 'clear' }
+  /** "book a viewing for number 1 on Saturday at 11". `index` is 0-based; missing means the highlighted row. */
+  | { kind: 'book'; what: string; index?: number; when: import('./when').When | null }
 
 export interface FilterPatch {
   /** Filters that replace any existing filter on the same key. */

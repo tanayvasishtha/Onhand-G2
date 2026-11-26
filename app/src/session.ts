@@ -1,6 +1,7 @@
 import {
   applyPatch,
   compareScreen,
+  confirmScreen,
   detailScreen,
   listeningScreen,
   parse,
@@ -12,10 +13,20 @@ import {
   type Result,
   type Sheet,
   type ViewState,
+  type When,
 } from '@onhand/shared'
 import type { Extra } from './speech'
 
-export type Screen = 'ready' | 'listening' | 'results' | 'detail' | 'compare' | 'recap'
+export type Screen = 'ready' | 'listening' | 'results' | 'detail' | 'compare' | 'recap' | 'confirm'
+
+/** A viewing, visit or test drive for one row. Booked in Google Calendar after a tap. */
+export interface Booking {
+  r: number
+  what: string
+  when: When
+  minutes: number
+  status: 'pending' | 'booking' | 'booked' | 'failed'
+}
 
 export const MENU = [
   { itemID: 1, itemName: 'Details' },
@@ -37,9 +48,13 @@ export class Session {
   private before: Screen = 'ready'
   private compared: [number, number] = [0, 1]
   private history: Query[] = []
-  private flash = ''
+  /** One-off footer message, cleared after the next render. */
+  flash = ''
   requests = 0
   transcript: string[] = []
+  /** Waiting for a tap on the confirm screen. */
+  pending: Booking | null = null
+  bookings: Booking[] = []
   /** Last line of the recap screen: where the shortlist went. */
   exportNote = 'export not set up'
 
@@ -74,7 +89,16 @@ export class Session {
       case 'compare':
         return compareScreen(v, ...this.compared)
       case 'recap':
-        return recapScreen(v, this.requests, this.exportNote)
+        return recapScreen(
+          v,
+          this.requests,
+          this.exportNote,
+          this.bookings.filter(b => b.status === 'booked').map(b => `booked ${b.what} ${b.when.label} r${b.r}`),
+        )
+      case 'confirm':
+        return this.pending
+          ? confirmScreen(v, { r: this.pending.r, what: this.pending.what, label: this.pending.when.label, minutes: this.pending.minutes })
+          : resultsScreen(v)
     }
   }
 
@@ -97,6 +121,7 @@ export class Session {
       this.refresh()
     }
     const cmd = patch.command
+    if (cmd?.kind === 'book') return this.askBooking(cmd.what, cmd.index, cmd.when)
     if (cmd?.kind === 'compare') return this.compare(cmd.a, cmd.b)
     if (cmd?.kind === 'detail') {
       if (this.result?.hits[cmd.index]) {
@@ -116,7 +141,45 @@ export class Session {
     this.highlight = 0
   }
 
+  /** Shows the confirm screen for a booking on one of the rows on screen. */
+  private askBooking(what: string, index: number | undefined, when: When | null) {
+    const hits = this.result?.hits ?? []
+    const i = index ?? this.highlight
+    this.screen = this.result ? 'results' : 'ready'
+    if (!hits[i]) {
+      this.flash = hits.length ? `no row ${i + 1} on screen` : 'find a row first, then book'
+      return
+    }
+    if (!when) {
+      this.flash = `say a day and time for the ${what}`
+      return
+    }
+    this.highlight = i
+    this.pending = { r: hits[i].row.r, what, when, minutes: 30, status: 'pending' }
+    this.screen = 'confirm'
+  }
+
+  /** Tap on the confirm screen: hands the booking to the app to send. */
+  confirm(): Booking | null {
+    const b = this.pending
+    this.pending = null
+    this.screen = this.result ? 'results' : 'ready'
+    if (!b) return null
+    b.status = 'booking'
+    this.bookings.push(b)
+    this.shortlist.add(b.r)
+    this.flash = `booking ${b.what} ${b.when.label}...`
+    return b
+  }
+
+  private cancelBooking() {
+    this.pending = null
+    this.screen = this.result ? 'results' : 'ready'
+    this.flash = 'booking cancelled'
+  }
+
   tap() {
+    if (this.screen === 'confirm') return
     if (this.screen === 'detail' || this.screen === 'compare') {
       this.screen = 'results'
       return
@@ -128,6 +191,7 @@ export class Session {
   }
 
   move(step: 1 | -1) {
+    if (this.screen === 'confirm') return this.cancelBooking()
     if (this.screen === 'detail' || this.screen === 'compare') {
       this.screen = 'results'
       return
@@ -139,6 +203,7 @@ export class Session {
 
   holdStart() {
     if (this.screen === 'recap') this.reset()
+    if (this.screen === 'confirm') this.cancelBooking()
     this.before = this.screen === 'listening' ? this.before : this.screen
     this.listening = true
     this.heard = ''
@@ -155,6 +220,7 @@ export class Session {
   }
 
   menu(id: number) {
+    if (this.screen === 'confirm') this.cancelBooking()
     switch (id) {
       case 1:
         if (this.result?.hits.length) this.screen = 'detail'
@@ -209,6 +275,8 @@ export class Session {
     this.requests = 0
     this.transcript = []
     this.exportNote = 'export not set up'
+    this.pending = null
+    this.bookings = []
     this.screen = 'ready'
   }
 }

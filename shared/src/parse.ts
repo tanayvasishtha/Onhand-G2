@@ -5,6 +5,7 @@
 
 import type { Column, Filter, FilterPatch, Sheet, SortSpec } from './types'
 import { aliasIndex, READY, parseMonth } from './normalize'
+import { parseWhen } from './when'
 
 const SMALL: Record<string, number> = {
   zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
@@ -114,6 +115,18 @@ export function parse(text: string, sheet: Sheet): FilterPatch {
   let sort: SortSpec | undefined
   let clear = false
   let command: FilterPatch['command']
+
+  // Booking a viewing, visit or test drive is a request on its own, never a filter.
+  const book = T.t.match(/\b(?:book|schedule|set up|arrange|fix|line up)\b(?: me| us| them)?(?: in)?(?: a| an| the)? ?(viewing|visit|showing|tour|test drive|tasting|appointment|meeting|call|interview)\b/)
+  if (book) {
+    const n = T.t.match(/\b(?:number|option|row) (\d{1,2})\b/) ?? T.t.match(/\bfor (\d)\b(?! ?(?:am|pm|\d))/)
+    return {
+      set: [],
+      remove: [],
+      command: { kind: 'book', what: book[1], index: n ? Number(n[1]) - 1 : undefined, when: parseWhen(T.t) },
+      unparsed: '',
+    }
+  }
 
   // Commands and resets.
   for (const m of T.find(/\b(start over|clear (?:all|everything|filters)|reset|new search)\b/g)) {

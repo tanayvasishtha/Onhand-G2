@@ -65,3 +65,11 @@ describe('live Google Sheet through the Apps Script bridge', () => {
     expect(draftText({ sheet: units, tab: 'Units', shortlist: [43], requests: 1, filters: '', transcript: [] }).subject).toBe('The option we talked about today')
   })
 })
+
+describe('booking a viewing', () => {
+  it('names the booked option in the follow-up email', () => {
+    const { body } = draftText({ sheet: units, tab: 'Units', shortlist: [12, 43], requests: 3, filters: '', transcript: [], bookings: [{ r: 43, what: 'viewing', label: 'Sat 28 Nov, 11:00' }] })
+    expect(body).toContain('We are booked to see option 2 on Sat 28 Nov at 11:00.')
+    expect(body).toContain('Tell me if you would like to see any of the others too.')
+  })
+})
