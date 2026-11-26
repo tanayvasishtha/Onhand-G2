@@ -86,7 +86,7 @@ export function inferSchema(grid: string[][], id: string, name: string): Schema 
       for (const v of vals) for (const item of v.split(/[,;/]/).map(x => x.trim()).filter(Boolean)) if (!canon.has(normText(item))) canon.set(normText(item), item)
       col.values = Object.fromEntries([...canon.values()].map(v => [v, [normText(v)]]))
     }
-    if (type === 'bool') col.label = spokenNames(h)[0]?.split(' ')[0]
+    if (type === 'bool') col.label = spokenNames(h)[0]?.slice(0, 12)
     return col
   })
 
@@ -98,11 +98,13 @@ export function inferSchema(grid: string[][], id: string, name: string): Schema 
 
   const price = columns.find(c => c.type === 'money')
   const size = columns.find(c => (c.type === 'number' || c.type === 'int') && SIZE_HEADER.test(c.header))
+  // Card: the name, the price, then the first two short columns that tell rows apart.
   const card: CardField[] = [{ key: title.key, maxChars: 18 }]
+  if (price) card.push({ key: price.key })
   for (const c of columns) {
     if (card.length >= 4) break
-    if (c === title) continue
-    if (c.type === 'money' || c.type === 'category' || c.type === 'date' || c.type === 'int') card.push({ key: c.key })
+    if (c === title || c === price) continue
+    if (c.type === 'category' || c.type === 'date' || c.type === 'int') card.push({ key: c.key })
   }
   const relaxOrder = [
     ...columns.filter(c => c.type === 'bool'),
