@@ -46,6 +46,17 @@ app.get('/health', c =>
   c.json({ ok: true, speech: speechEnabled(), fallback: fallbackEnabled(), sheet: liveEnabled() && !liveError, live: [...live.keys()], liveError: liveError || undefined }),
 )
 
+/** A plain status page, so opening the server URL in a browser shows what is running. */
+app.get('/', c => {
+  const on = (v: boolean) => (v ? 'on' : 'off')
+  const tabs = [...live.values()].map(l => `<li>${l.tab}: ${l.sheet.rows.length} rows</li>`).join('')
+  return c.html(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Onhand server</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:560px;margin:48px auto;padding:0 20px;background:#111;color:#e5e5e5}h1{font-size:22px;margin:0 0 4px}p{color:#a7a7a7;margin:0 0 20px}td{padding:4px 16px 4px 0}a{color:#3cfa44}</style></head>
+<body><h1>Onhand server</h1><p>Backend for the Onhand app on Even Realities G2. Keys stay here; the app only talks to this server.</p>
+<table><tr><td>Speech (Deepgram)</td><td>${on(speechEnabled())}</td></tr><tr><td>Claude fallback</td><td>${on(fallbackEnabled())}</td></tr><tr><td>Google Sheet</td><td>${on(liveEnabled() && !liveError)}</td></tr></table>
+${tabs ? `<ul>${tabs}</ul>` : ''}<p><a href="/health">/health</a> &middot; <a href="https://github.com/tanayvasishtha/Onhand-G2">source on GitHub</a></p></body></html>`)
+})
+
 /** The live tab as CSV, so the app parses it with the same loader. */
 app.get('/sheet/:id', async c => {
   const id = c.req.param('id')
