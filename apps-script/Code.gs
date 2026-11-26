@@ -41,7 +41,7 @@ function doPost(e) {
     return json_({ ok: false, error: 'body is not JSON' });
   }
   if (!authorised_(body.token)) return json_({ ok: false, error: 'bad token' });
-  if (body.action === 'book') return book_(body);
+  if (body.action === 'book') return calendarEvent_(body);
   if (body.action !== 'lead') return json_({ ok: false, error: 'unknown action' });
 
   var lock = LockService.getScriptLock();
@@ -71,7 +71,7 @@ function doPost(e) {
 }
 
 /** One event on the default calendar, in the calendar's own time zone. */
-function book_(body) {
+function calendarEvent_(body) {
   var w = body.when || {};
   if (!w.y || !w.m || !w.d) return json_({ ok: false, error: 'no date' });
   var start = new Date(w.y, w.m - 1, w.d, w.h || 0, w.min || 0);
