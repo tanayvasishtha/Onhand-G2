@@ -56,7 +56,8 @@ export async function loadLive(): Promise<LiveSheet[]> {
   const mapped = new Map(tabMap())
   const out: LiveSheet[] = []
   for (const tab of ping.tabs ?? []) {
-    if (tab === 'Leads') continue
+    // Leads and old copies of it ("Leads (test)") hold output, not stock.
+    if (/^leads/i.test(tab)) continue
     const res = await call({ action: 'read', tab })
     const csv = await res.text()
     if (csv.startsWith('{')) throw new Error(`sheet script: ${csv}`)
