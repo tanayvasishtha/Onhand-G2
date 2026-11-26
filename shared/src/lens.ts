@@ -117,7 +117,7 @@ export function readyScreen(s: ViewState): string {
   const { sheet } = s
   const lines = [
     `${mic(s)} Onhand | ${sheet.schema.name}${s.replay ? ' | replay' : ''}`,
-    `${sheet.rows.length} rows (synthetic)${sheet.skipped.length ? ` | ${sheet.skipped.length} skipped` : ''}`,
+    `${sheet.rows.length} rows${sheet.schema.id.startsWith('live-') ? ' | live sheet' : ' (synthetic)'}${sheet.skipped.length ? ` | ${sheet.skipped.length} skipped` : ''}`,
     '',
     'hold: listen to the client',
     'tap: shortlist   swipe: next row',

@@ -74,6 +74,7 @@ All numbers come from scripts in this repo.
 | Speech, 3 spoken clips through the relay | final text 0.40 to 0.45 s after release, all three transcribed correctly | `npm run check:speech` |
 | Claude fallback on 2 requests the sheet cannot answer | correct notes in 1.7 to 3.9 s | server log |
 | Sheet bridge against a stand-in script: read tab, lead row, draft text, wrong token | 4 of 4 | `npm test` (server/test/live.test.ts) |
+| Real Google Sheet: 250 units read, 2 requests, 2 rows shortlisted, End meeting | Leads row 2 written with rows r12 and r43, Gmail draft created, about 15 s with a cold Apps Script | manual run, Nov 26 |
 
 The held-out set is no longer unseen after those fixes, so the 15 of 20 is the honest number for new phrasing.
 
@@ -110,9 +111,9 @@ To use your own Google Sheet:
 
 1. Create a Google Sheet and import `shared/fixtures/dubai_units.csv` (or your own stock with similar headers) into a tab named `Units`.
 2. Open Extensions, Apps Script, and paste `apps-script/Code.gs`.
-3. In Project Settings, add the script property `ONHAND_TOKEN` with a long random value.
-4. Deploy as a web app: execute as me, access anyone. Approve the Sheets and Gmail permissions.
-5. Put the web app URL in `SHEET_SCRIPT_URL` and the same token in `SHEET_SCRIPT_TOKEN` in `server/.env`, then restart the server.
+3. Run `setup` once from the editor and approve the Sheets and Gmail permissions. It creates the token and prints it in the execution log. (For a standalone script project, first add the script property `SHEET_ID` with the sheet's id.)
+4. Deploy as a web app: execute as me, access anyone.
+5. Put the web app URL in `SHEET_SCRIPT_URL` and the printed token in `SHEET_SCRIPT_TOKEN` in `server/.env`, then restart the server.
 
 The app then lists the sheet first, for example `Agency stock: Units, 250 rows`. Tabs named `Menu` and `Cars` map to the other two schemas, and `SHEET_TABS` changes the mapping.
 
