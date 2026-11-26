@@ -1,0 +1,13 @@
+Item,Category,Colour,Material,Price (AED),Width (cm),In stock,Delivery
+Oslo three-seater,Sofa,Grey,Fabric,"AED 3,200",210,Yes,Next week
+Oslo corner sofa,Sofa,Grey,Fabric,"AED 4,850",280,No,6 weeks
+Milan two-seater,Sofa,Tan,Leather,"AED 5,400",180,Yes,Next week
+Milan armchair,Armchair,Tan,Leather,"AED 2,100",90,Yes,In store
+Nord dining table,Table,Oak,Wood,"AED 2,750",160,Yes,In store
+Nord coffee table,Table,Walnut,Wood,"AED 1,200",110,No,4 weeks
+Cove bed frame,Bed,White,Wood,"AED 3,900",180,Yes,2 weeks
+Cove bedside,Storage,White,Wood,AED 650,45,Yes,In store
+Lumen sofa bed,Sofa,Blue,Fabric,"AED 2,950",200,Yes,2 weeks
+Aria lounge chair,Armchair,Green,Velvet,"AED 1,850",80,,2 weeks
+Aria ottoman,Storage,Green,Velvet,AED 700,60,Yes,In store
+Halden sideboard,Storage,Oak,Wood,"AED 3,300",190,Yes,Next week

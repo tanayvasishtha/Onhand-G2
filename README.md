@@ -58,7 +58,7 @@ nearest, eased: pets, Sea, budget
 
 Claude never sees or filters the rows. A wrong answer from the model can at most add a filter on a real column, and that filter shows on the first line of the lens.
 
-The same parser and engine run three sheets, each described by a column list in `shared/src/schemas.ts`: Dubai units, a restaurant menu with allergens, and used-car stock.
+The same parser and engine run three sheets with hand-written column lists in `shared/src/schemas.ts`: Dubai units, a restaurant menu with allergens, and used-car stock. Any other tab works too: `shared/src/infer.ts` reads the header and values and decides each column's type (money, count, number, yes/no, category, list, date or text), the words a person would say for it (from the header), the units ("cm", "km"), and which column names the row. A furniture showroom and a recruiter's candidate list, neither seen before, answer requests like "a grey sofa under 4000 that is in stock" and "backend engineer who knows Kafka, under 30 lakh, remote" with the right rows (`shared/test/infer.test.ts`).
 
 ## Results
 
@@ -66,7 +66,7 @@ All numbers come from scripts in this repo.
 
 | Check | Result | Command |
 |---|---|---|
-| Unit and property tests | 233 passed | `npm test` |
+| Unit and property tests | 238 passed | `npm test` |
 | Parser, 80 meeting requests across 3 sheets, each expected answer reviewed by hand | 80 of 80 | `npm test` (shared/test/parse-eval.test.ts) |
 | Parser, 20 requests written after tuning | 15 of 20 on first run, 20 of 20 after fixing the 5 misses | `npm run eval:parser` |
 | Engine properties, 1,000 random queries | every sure row passes every filter, every maybe row fails none | `npm test` (engine.test.ts) |
@@ -115,7 +115,7 @@ To use your own Google Sheet:
 4. Deploy as a web app: execute as me, access anyone.
 5. Put the web app URL in `SHEET_SCRIPT_URL` and the printed token in `SHEET_SCRIPT_TOKEN` in `server/.env`, then restart the server.
 
-The app then lists the sheet first, for example `Agency stock: Units, 250 rows`. Tabs named `Menu` and `Cars` map to the other two schemas, and `SHEET_TABS` changes the mapping.
+The app then lists every tab, for example `Agency stock: Units, 250 rows`. Tabs named `Units`, `Menu` and `Cars` use the hand-written schemas (`SHEET_TABS` changes the mapping). Every other tab except `Leads` gets a schema worked out from its columns.
 
 Tests and checks:
 

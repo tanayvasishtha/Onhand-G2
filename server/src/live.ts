@@ -3,7 +3,7 @@
 // bundled CSVs. At the end of a meeting the shortlist becomes a row on the
 // Leads tab and a Gmail draft. The script URL and token stay on the server.
 
-import { formatCell, loadCsv, SCHEMAS, type Schema, type Sheet } from '@onhand/shared'
+import { formatCell, inferSchema, loadCsv, parseCsv, SCHEMAS, type Schema, type Sheet } from '@onhand/shared'
 
 const url = () => process.env.SHEET_SCRIPT_URL ?? ''
 const token = () => process.env.SHEET_SCRIPT_TOKEN ?? ''
@@ -32,20 +32,43 @@ async function call(params: Record<string, string>): Promise<Response> {
   return res
 }
 
-/** Lists the tabs, then reads each mapped tab that exists. */
+/** Id for a tab with no known layout: "live-tab-" + the tab name as a slug. */
+export function tabId(tab: string): string {
+  return `live-tab-${tab.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`
+}
+
+/**
+ * Schema for one live tab: a known layout when the tab is mapped (Units, Menu,
+ * Cars), otherwise one worked out from the tab's own columns. The app makes the
+ * same choice from the same CSV, so both sides agree.
+ */
+export function liveSchema(id: string, name: string, csv: string): Schema {
+  const base = SCHEMAS[id.replace(/^live-/, '')]
+  if (base) return { ...base, id, name, source: `Live Google Sheet, ${name}.` }
+  return inferSchema(parseCsv(csv), id, name)
+}
+
+/** Lists the tabs, then reads every tab except Leads. */
 export async function loadLive(): Promise<LiveSheet[]> {
   if (!liveEnabled()) return []
   const ping = (await (await call({ action: 'ping' })).json()) as { ok: boolean; name?: string; tabs?: string[]; error?: string }
   if (!ping.ok) throw new Error(`sheet script: ${ping.error}`)
+  const mapped = new Map(tabMap())
   const out: LiveSheet[] = []
-  for (const [tab, schemaId] of tabMap()) {
-    if (!ping.tabs?.includes(tab)) continue
+  for (const tab of ping.tabs ?? []) {
+    if (tab === 'Leads') continue
     const res = await call({ action: 'read', tab })
     const csv = await res.text()
     if (csv.startsWith('{')) throw new Error(`sheet script: ${csv}`)
-    const base = SCHEMAS[schemaId]
-    const schema: Schema = { ...base, id: `live-${base.id}`, name: `${ping.name ?? 'Google Sheet'}: ${tab}`, source: `Live Google Sheet "${ping.name}", tab ${tab}.` }
-    out.push({ id: schema.id, tab, csv, sheet: loadCsv(csv, schema) })
+    if (!csv.trim() || !csv.includes('\n')) continue
+    const schemaId = mapped.get(tab)
+    const id = schemaId ? `live-${schemaId}` : tabId(tab)
+    const name = `${ping.name ?? 'Google Sheet'}: ${tab}`
+    try {
+      out.push({ id, tab, csv, sheet: loadCsv(csv, liveSchema(id, name, csv)) })
+    } catch (err) {
+      console.warn(`google sheet: skipped tab ${tab}: ${(err as Error).message}`)
+    }
   }
   return out
 }

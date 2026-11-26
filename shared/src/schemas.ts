@@ -1,7 +1,8 @@
 import type { Schema } from './types'
 
-// Hard-coded schemas, one per starter template. Claude schema inference for
-// arbitrary sheets is a stretch goal; these three cover the demo.
+// Hand-written schemas for three known layouts. They carry synonyms and
+// neighbouring areas that inference cannot guess. Any other sheet gets a
+// schema from infer.ts.
 
 export const dubaiUnits: Schema = {
   id: 'dubai-units',
