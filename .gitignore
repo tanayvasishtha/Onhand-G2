@@ -4,3 +4,4 @@ dist/
 .env.local
 *.ehpk
 out/
+app/public/demo-voice/

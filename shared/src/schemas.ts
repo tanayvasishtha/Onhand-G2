@@ -92,10 +92,10 @@ export const dubaiUnits: Schema = {
       type: 'category',
       synonyms: ['view', 'facing'],
       values: {
-        Sea: ['sea', 'sea view', 'beach', 'ocean', 'water'],
+        Sea: ['sea', 'sea view', 'seaview', 'sea facing', 'beach', 'ocean', 'water'],
         Marina: ['marina view'],
         Burj: ['burj', 'burj view', 'burj khalifa'],
-        Golf: ['golf', 'golf course'],
+        Golf: ['golf', 'golf course', 'golf view'],
         Park: ['park', 'park view', 'garden'],
         Canal: ['canal'],
         Creek: ['creek view'],

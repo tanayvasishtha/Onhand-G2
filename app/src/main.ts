@@ -21,6 +21,12 @@ const LENS_NAME = 'lens'
 const params = new URLSearchParams(location.search)
 const script = SCRIPTS[params.get('replay') ?? '']
 const replay = script ? new Replay(script.lines) : null
+// ?voice=demo plays recorded voice clips (16 kHz s16le, /demo-voice/1.pcm, 2.pcm, ...)
+// into the speech stream on each hold instead of the microphone. Used to record
+// a repeatable demo; the clips still go through the server and Deepgram.
+const voiceClips = params.get('voice')
+let voiceNext = Number(params.get('from') ?? 1)
+let voiceTimer: number | null = null
 let session = new Session(SHEETS[script?.sheet ?? 'dubai-units'](), !!script)
 let bridge: EvenAppBridge | null = null
 const filter = new GestureFilter()
@@ -80,6 +86,7 @@ function handle(g: Gesture) {
             render()
           })
         : null
+      if (listening && voiceClips) void playClip(listening)
       break
     case 'release':
       void release()
@@ -160,6 +167,25 @@ async function endMeeting() {
   s.exportNote = 'error' in out ? `not saved: ${out.error.slice(0, 40)}` : `lead row ${out.row} saved | draft in Gmail`
   if (!('error' in out)) logEvent(`lead row ${out.row} saved, draft: ${out.draftUrl}`)
   render()
+}
+
+/** Streams the next demo clip into the open speech stream in real time, 100 ms per frame. */
+async function playClip(l: Listening) {
+  const n = voiceNext++
+  const res = await fetch(`/demo-voice/${n}.pcm`)
+  if (!res.ok) return
+  const pcm = new Uint8Array(await res.arrayBuffer())
+  let i = 0
+  voiceTimer = window.setInterval(() => {
+    if (listening !== l || i >= pcm.length) {
+      if (voiceTimer !== null) window.clearInterval(voiceTimer)
+      voiceTimer = null
+      return
+    }
+    l.send(pcm.slice(i, i + 3200))
+    frames++
+    i += 3200
+  }, 100)
 }
 
 function hasTyped() {
@@ -247,6 +273,7 @@ if (!bridge) {
   bridge.onEvenHubEvent(event => {
     if (event.audioEvent?.audioPcm) {
       if (session.listening) {
+        if (voiceClips) return
         frames++
         listening?.send(event.audioEvent.audioPcm)
       }

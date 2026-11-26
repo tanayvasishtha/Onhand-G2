@@ -125,3 +125,11 @@ describe('restaurant and car sheets, same parser', () => {
     expect(byKey('hybrid toyota', cars)).toMatchObject({ 'fuel:in': { values: ['Hybrid'] }, 'make:in': { values: ['Toyota'] } })
   })
 })
+
+describe('speech-to-text spellings', () => {
+  it('reads "Seaview" written as one word', async () => {
+    const { units } = await import('./fixtures')
+    const { parse } = await import('../src/parse')
+    expect(parse('2 bed in Marina. Under 2,500,000. Seaview,', units).set).toContainEqual({ key: 'view', op: 'in', values: ['Sea'] })
+  })
+})

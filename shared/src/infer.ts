@@ -24,6 +24,19 @@ function keyFor(header: string, used: Set<string>): string {
   return key
 }
 
+// British and American spellings that speech-to-text may pick either way.
+const VARIANTS: [string, string][] = [['grey', 'gray'], ['colour', 'color'], ['centre', 'center'], ['jewellery', 'jewelry']]
+
+/** A value and its other spelling, so "gray" finds a sheet that says "Grey". */
+function spellings(v: string): string[] {
+  const out = new Set([v])
+  for (const [a, b] of VARIANTS) {
+    if (v.includes(a)) out.add(v.replace(a, b))
+    if (v.includes(b)) out.add(v.replace(b, a))
+  }
+  return [...out]
+}
+
 /** Words a person would say for this column: the header without its unit, singular and plural. */
 function spokenNames(header: string): string[] {
   const words = normText(header.replace(UNIT_IN_HEADER, '')).replace(/[^a-z0-9 /]+/g, ' ').trim()
@@ -79,7 +92,7 @@ export function inferSchema(grid: string[][], id: string, name: string): Schema 
     if (type === 'category') {
       const canon = new Map<string, string>()
       for (const v of vals) if (!canon.has(normText(v))) canon.set(normText(v), v)
-      col.values = Object.fromEntries([...canon.values()].map(v => [v, [normText(v)]]))
+      col.values = Object.fromEntries([...canon.values()].map(v => [v, spellings(normText(v))]))
     }
     if (type === 'list') {
       const canon = new Map<string, string>()

@@ -74,3 +74,11 @@ describe('schema inference for a sheet Onhand has never seen', () => {
     expect(screen).toContain('Oslo three-seater')
   })
 })
+
+describe('spelling variants from speech-to-text', () => {
+  it('matches "gray" to a sheet that says Grey', () => {
+    const grid = parseCsv(furniture)
+    const shop = loadSheet(grid, inferSchema(grid, 'x', 'Showroom'))
+    expect(describePatch(parse("A gray sofa under 4,000 that's in stock.", shop))).toEqual(['category Sofa', 'colour Grey', 'in_stock yes', 'price_aed ..4000'])
+  })
+})
