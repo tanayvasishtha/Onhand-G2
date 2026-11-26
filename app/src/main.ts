@@ -200,7 +200,8 @@ if (server?.live.length) {
   // The client's real sheet replaces the bundled one, except in replay mode.
   for (const l of await liveSheets().catch(() => [])) {
     if (!addLive(l.id, l.name, l.csv)) continue
-    const pick = !script && l.id === server.live[0]
+    // ?sheet=live-tab-showroom opens that tab; otherwise the first live tab.
+    const pick = !script && l.id === (params.get('sheet') ?? server.live[0])
     addSheetOption(l.id, l.name, pick)
     if (pick) {
       session = new Session(SHEETS[l.id](), false)
