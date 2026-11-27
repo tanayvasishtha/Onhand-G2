@@ -4,6 +4,8 @@ Onhand puts your Google Sheet on Even Realities G2 glasses during a client meeti
 
 Built for the Even Realities G2 "Heads Up" hackathon, track AI Assistants & Work.
 
+**Demo video (3 min):** https://youtu.be/ym8QosklnWo
+
 ![Six lens screens from the Even Hub simulator: results, results after "it has to allow pets" with two rows shortlisted, the booking confirm screen, nearest match when nothing fits, listening, and row details](docs/lens.png)
 
 *Captured from the Even Hub simulator 0.9.5 during a scripted meeting. Left to right, top to bottom: first results, after "it has to allow pets" with two rows shortlisted, "book a viewing for number 1 on Saturday at 11", a request with no exact match, listening, row details.*
